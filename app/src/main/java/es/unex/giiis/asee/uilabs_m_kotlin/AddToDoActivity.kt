@@ -3,18 +3,18 @@ package es.unex.giiis.asee.uilabs_m_kotlin
 import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
 import android.app.Dialog
-import android.app.DialogFragment
 import android.app.TimePickerDialog
 import android.app.TimePickerDialog.OnTimeSetListener
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
-import java.util.*
+import androidx.fragment.app.DialogFragment
 import es.unex.giiis.asee.uilabs_m_kotlin.ToDoItem.Priority
 import es.unex.giiis.asee.uilabs_m_kotlin.ToDoItem.Status
+import java.util.*
 
 class AddToDoActivity : AppCompatActivity() {
     private var mDate: Date? = null
@@ -51,8 +51,8 @@ class AddToDoActivity : AppCompatActivity() {
         val cancelButton = findViewById<View>(R.id.cancelButton) as Button
         cancelButton.setOnClickListener {
             log("Entered cancelButton.OnClickListener.onClick()")
-
-            // TODO - Implement onClick().
+            setResult(RESULT_CANCELED)
+            finish()
         }
 
         //OnClickListener for the Reset Button
@@ -60,7 +60,10 @@ class AddToDoActivity : AppCompatActivity() {
         resetButton.setOnClickListener {
             log("Entered resetButton.OnClickListener.onClick()")
 
-            // TODO - Reset data fields to default values
+            mTitleText?.setText("")
+            mStatusRadioGroup?.check(mDefaultStatusButton?.id!!)
+            mPriorityRadioGroup?.check(mDefaultPriorityButton?.id!!)
+            setDefaultDateTime()
         }
 
         // OnClickListener for the Submit Button
@@ -70,32 +73,27 @@ class AddToDoActivity : AppCompatActivity() {
             log("Entered submitButton.OnClickListener.onClick()")
 
             // Gather ToDoItem data
+            val priority = priority
+            val status = status
+            val title = mTitleText?.text.toString()
+            val date = "$dateString - $timeString"
 
-            // TODO - Get Priority
+            val intent = Intent()
+            ToDoItem.packageIntent(intent, title, priority, status, date)
 
-
-            // TODO -  Get Status
-
-
-            // TODO -  Title
-
-
-            // TODO - Date
-
-
-            // TODO - Package ToDoItem data into an Intent
-
-
-            // TODO - return data Intent and finish
+            setResult(RESULT_OK, intent)
+            finish()
         }
     }
 
     private fun showDatePickerDialog() {
-        // TODO - Create a Date Picker Dialog and show it
+        val datePickerFragment = DatePickerFragment()
+        datePickerFragment.show(supportFragmentManager, "datePickerFragment")
     }
 
     private fun showTimePickerDialog() {
-        // TODO - Create a Time Picker Dialog and show it
+        val timePickerFragment = TimePickerFragment()
+        timePickerFragment.show(supportFragmentManager, "timePickerFragment")
     }
 
     // Do not modify below here
@@ -120,7 +118,7 @@ class AddToDoActivity : AppCompatActivity() {
     }
 
     private val priority: Priority
-        private get() = when (mPriorityRadioGroup!!.checkedRadioButtonId) {
+        get() = when (mPriorityRadioGroup!!.checkedRadioButtonId) {
             R.id.lowPriority -> {
                 Priority.LOW
             }
@@ -132,7 +130,7 @@ class AddToDoActivity : AppCompatActivity() {
             }
         }
     private val status: Status
-        private get() {
+        get() {
             return when (mStatusRadioGroup!!.checkedRadioButtonId) {
                 R.id.statusDone -> {
                     Status.DONE
@@ -145,7 +143,7 @@ class AddToDoActivity : AppCompatActivity() {
 
     // DialogFragment used to pick a ToDoItem deadline date
     class DatePickerFragment : DialogFragment(), OnDateSetListener {
-        override fun onCreateDialog(savedInstanceState: Bundle): Dialog {
+        override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 
             // Use the current date as the default date in the picker
             val c = Calendar.getInstance()
@@ -154,7 +152,7 @@ class AddToDoActivity : AppCompatActivity() {
             val day = c[Calendar.DAY_OF_MONTH]
 
             // Create a new instance of DatePickerDialog and return it
-            return DatePickerDialog(activity, this, year, month, day)
+            return DatePickerDialog(requireContext(), this, year, month, day)
         }
 
         override fun onDateSet(
@@ -168,7 +166,7 @@ class AddToDoActivity : AppCompatActivity() {
 
     // DialogFragment used to pick a ToDoItem deadline time
     class TimePickerFragment : DialogFragment(), OnTimeSetListener {
-        override fun onCreateDialog(savedInstanceState: Bundle): Dialog {
+        override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 
             // Use the current time as the default values for the picker
             val c = Calendar.getInstance()
