@@ -76,7 +76,7 @@ class AddToDoActivity : AppCompatActivity() {
             val priority = priority
             val status = status
             val title = mTitleText?.text.toString()
-            val date = "$dateString - $timeString"
+            val date = "$dateString $timeString"
 
             val intent = Intent()
             ToDoItem.packageIntent(intent, title, priority, status, date)
