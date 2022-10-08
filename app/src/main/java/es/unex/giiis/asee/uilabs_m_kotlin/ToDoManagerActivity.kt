@@ -7,7 +7,6 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -17,42 +16,48 @@ import java.text.ParseException
 import java.util.*
 
 class ToDoManagerActivity : AppCompatActivity() {
-    private val mRecyclerView: RecyclerView? = null
-    private val mLayoutManager: RecyclerView.LayoutManager? = null
-    private val mAdapter: ToDoAdapter? = null
+    private var mRecyclerView: RecyclerView? = null
+    private var mLayoutManager: RecyclerView.LayoutManager? = null
+    private var mAdapter: ToDoAdapter? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_to_do_manager)
         val fab = findViewById<View>(R.id.fab) as FloatingActionButton
         fab.setOnClickListener {
-            // TODO - Attach Listener to FloatingActionButton. Implement onClick()
+            val intent = Intent(this, AddToDoActivity::class.java)
+            startActivityForResult(intent, ADD_TODO_ITEM_REQUEST)
         }
 
-        // TODO - Get a reference to the RecyclerView
-
+        mRecyclerView = findViewById(R.id.my_recycler_view)
 
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
         mRecyclerView!!.setHasFixedSize(true)
 
         // use a linear layout manager
-        // TODO - Set a Linear Layout Manager to the RecyclerView
+        mLayoutManager = LinearLayoutManager(this)
+        mRecyclerView!!.layoutManager = mLayoutManager
 
-
-        // TODO - Create a new Adapter for the RecyclerView
-        // specify an adapter (see also next example)
-
-        // TODO - Attach the adapter to the RecyclerView
+        mAdapter = ToDoAdapter(object : ToDoAdapter.OnItemClickListener {
+            override fun onItemClick(item: ToDoItem?) {
+                Log.i("onItemClick", "Item " + item?.title + " clicked")
+                Snackbar.make(mRecyclerView!!, "Item " + item?.title + " clicked", Snackbar.LENGTH_SHORT).show()
+            }
+        })
+        mRecyclerView?.adapter = mAdapter
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         log("Entered onActivityResult()")
 
-        // TODO - Check result code and request code.
-
-
-        // TODO - Create a TodoItem from data and add it to the adapter
+        if (requestCode == ADD_TODO_ITEM_REQUEST && resultCode == RESULT_OK) {
+            if (data != null) {
+                val toDoItem = ToDoItem(data)
+                mAdapter?.add(toDoItem)
+            }
+        }
     }
 
     public override fun onResume() {
@@ -94,7 +99,7 @@ class ToDoManagerActivity : AppCompatActivity() {
 
     private fun dump() {
         for (i in 0 until mAdapter?.itemCount!!) {
-            val data: String = (mAdapter.getItem(i) as ToDoItem).toLog()
+            val data: String = (mAdapter?.getItem(i) as ToDoItem).toLog()
             log("Item " + i + ": " + data.replace(ToDoItem.ITEM_SEP, ","))
         }
     }
@@ -150,7 +155,7 @@ class ToDoManagerActivity : AppCompatActivity() {
                 )
             )
             for (idx in 0 until mAdapter?.itemCount!!) {
-                writer.println(mAdapter.getItem(idx))
+                writer.println(mAdapter?.getItem(idx))
             }
         } catch (e: IOException) {
             e.printStackTrace()

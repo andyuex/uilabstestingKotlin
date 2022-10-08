@@ -26,8 +26,6 @@ class AddToDoActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_to_do)
-        val toolbar = findViewById<View>(R.id.toolbar) as Toolbar
-        setSupportActionBar(toolbar)
         mTitleText = findViewById<View>(R.id.title) as EditText
         mDefaultStatusButton = findViewById<View>(R.id.statusNotDone) as RadioButton
         mDefaultPriorityButton = findViewById<View>(R.id.medPriority) as RadioButton
