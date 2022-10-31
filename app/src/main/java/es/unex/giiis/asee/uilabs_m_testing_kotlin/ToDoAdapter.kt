@@ -1,4 +1,4 @@
-package es.unex.giiis.asee.uilabs_m_kotlin
+package es.unex.giiis.asee.uilabs_m_testing_kotlin
 
 import android.view.LayoutInflater
 import android.view.View

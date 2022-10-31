@@ -1,4 +1,4 @@
-package es.unex.giiis.asee.uilabs_m_kotlin
+package es.unex.giiis.asee.uilabs_m_testing_kotlin
 
 import android.content.Intent
 import android.os.Bundle

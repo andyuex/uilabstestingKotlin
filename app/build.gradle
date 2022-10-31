@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace 'es.unex.giiis.asee.uilabs_m_kotlin'
+    namespace 'es.unex.giiis.asee.uilabs_m_testing_kotlin'
     compileSdk 33
 
     defaultConfig {
-        applicationId "es.unex.giiis.asee.uilabs_m_kotlin"
+        applicationId "es.unex.giiis.asee.uilabs_m_testing_kotlin"
         minSdk 23
         targetSdk 33
         versionCode 1

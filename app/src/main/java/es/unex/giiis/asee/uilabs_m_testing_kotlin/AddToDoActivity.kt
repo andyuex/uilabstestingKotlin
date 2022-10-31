@@ -1,4 +1,4 @@
-package es.unex.giiis.asee.uilabs_m_kotlin
+package es.unex.giiis.asee.uilabs_m_testing_kotlin
 
 import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
@@ -12,8 +12,8 @@ import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
-import es.unex.giiis.asee.uilabs_m_kotlin.ToDoItem.Priority
-import es.unex.giiis.asee.uilabs_m_kotlin.ToDoItem.Status
+import es.unex.giiis.asee.uilabs_m_testing_kotlin.ToDoItem.Priority
+import es.unex.giiis.asee.uilabs_m_testing_kotlin.ToDoItem.Status
 import java.util.*
 
 class AddToDoActivity : AppCompatActivity() {
