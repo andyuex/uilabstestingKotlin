@@ -1,7 +1,7 @@
 package es.unex.giiis.asee.uilabs_m_testing_kotlin
 
 open class ToDoItemList {
-    private var elements: MutableList<ToDoItem> = ArrayList()
+    var elements: MutableList<ToDoItem> = ArrayList()
 
     fun addItem(item: ToDoItem) {
         elements.add(item)
@@ -13,7 +13,7 @@ open class ToDoItemList {
 
     fun updateItem(position: Int, item: ToDoItem?) {
         val itemAtPosition = elements[position] as ToDoItem
-        itemAtPosition.status = ToDoItem.Status.NOT_DONE
+        itemAtPosition.status = item!!.status
     }
 
     operator fun get(position: Int): ToDoItem {
