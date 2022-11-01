@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 class ToDoAdapter     // Provide a suitable constructor (depends on the kind of dataset)
     (private val listener: OnItemClickListener) :
     RecyclerView.Adapter<ToDoAdapter.ViewHolder>() {
-    private val mItems: MutableList<ToDoItem> = ArrayList<ToDoItem>()
+    private val toDoItemList = ToDoItemList()
 
     interface OnItemClickListener {
         fun onItemClick(item: ToDoItem?) //Type of the element to be returned
@@ -27,26 +27,26 @@ class ToDoAdapter     // Provide a suitable constructor (depends on the kind of 
 
     // Replace the contents of a view (invoked by the layout manager)
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(mItems[position], listener)
+        holder.bind(toDoItemList[position], listener)
     }
 
     // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount(): Int {
-        return mItems.size
+        return toDoItemList.size()
     }
 
     fun add(item: ToDoItem) {
-        mItems.add(item)
+        toDoItemList.addItem(item)
         notifyDataSetChanged()
     }
 
     fun clear() {
-        mItems.clear()
+        toDoItemList.deleteAllItems()
         notifyDataSetChanged()
     }
 
     fun getItem(pos: Int): Any {
-        return mItems[pos]
+        return toDoItemList[pos]
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
