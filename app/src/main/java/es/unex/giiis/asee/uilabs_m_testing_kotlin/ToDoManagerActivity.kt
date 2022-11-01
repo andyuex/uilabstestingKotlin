@@ -78,7 +78,7 @@ class ToDoManagerActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         super.onCreateOptionsMenu(menu)
-        menu.add(Menu.NONE, MENU_DELETE, Menu.NONE, "Delete all")
+        menu.add(Menu.NONE, MENU_DELETE, Menu.NONE, R.string.delete_all_menu_button)
         menu.add(Menu.NONE, MENU_DUMP, Menu.NONE, "Dump to log")
         return true
     }
