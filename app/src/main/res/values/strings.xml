@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">UILabsKotlin</string>
+    <string name="app_name">UILabsTestingKotlin</string>
 
     <string name="done_string">Done:</string>
     <string name="priority_string">Priority:</string>
